@@ -1,0 +1,30 @@
+我需要一个三级菜单
+
+table : course 
+
+coulum: id   name  pid  teacherId.....   //假设一门老师教多门课程
+
+
+如果是固定的三级菜单，那么使用子自链接。
+我们知道，第一级对应多个第二级，第二级对应多个第三级。
+且第二级的pid是第一级的id，第三级的pid是第二级的id。
+最后第一级的id固定是0. 
+
+那么使用sql，就很简单了：
+select 
+	a.id one_id ,
+	a.name one_name,
+	b.id two_id ,
+	b.name two_name,
+	c.id three_id ,
+	c.name three_name,
+from 
+	course a 
+	left join course b 
+		on a.id = b.pid 
+	left join course c 
+		on b.id = c.pid 
+where 
+	a.id = '0' 
+	and 
+	a.teacherId = 'xxxxxx'
